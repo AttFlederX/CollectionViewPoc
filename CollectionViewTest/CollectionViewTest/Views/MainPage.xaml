@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CollectionViewTest.Controls;assembly=CollectionViewTest"
+             xmlns:transformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="CollectionViewTest.Views.MainPage"
+             x:Name="root"
+             Title="{Binding Title}">
+
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding ImageList}"
+                        RemainingItemsThreshold="0"
+                        RemainingItemsThresholdReachedCommand="{Binding PullMoreImageCommand}">
+
+            <CollectionView.Header>
+
+                <CollectionView ItemsSource="{Binding Source={x:Reference root}, Path=BindingContext.StoryList}"
+                                HeightRequest="72">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal"
+                                           ItemSpacing="0" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid WidthRequest="72"
+                                  HeightRequest="72">
+                                <controls:SquareImage Source="{Binding .}"
+                                                      Aspect="AspectFill"
+                                                      Margin="8, 8">
+                                    <controls:SquareImage.Transformations>
+                                        <transformations:CircleTransformation />
+                                    </controls:SquareImage.Transformations>
+                                </controls:SquareImage>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </CollectionView.Header>
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="3"
+                                 HorizontalItemSpacing="4"
+                                 VerticalItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <controls:SquareImage Source="{Binding .}"
+                                              Aspect="AspectFill" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <Grid HeightRequest="64">
+                    <ActivityIndicator HorizontalOptions="Center"
+                                       Margin="0, 8"
+                                       Color="DodgerBlue"
+                                       IsRunning="True" />
+                </Grid>
+            </CollectionView.Footer>
+
+        </CollectionView>
+    </StackLayout>
+
+</ContentPage>
